@@ -1,12 +1,29 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from "react-native";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "../../contexts/AuthContext";
+import { useState } from "react";
 
 export default function LoginScreen() {
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleGoogleLogin = async () => {
-    // TODO: Implement Google OAuth
-    // For now, navigate to setup
-    router.push("./setup");
+    try {
+      setIsLoading(true);
+      await login();
+      // Navigate to setup after successful login
+      router.push("./setup");
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert(
+        'Login Failed',
+        'Unable to sign in with Google. Please try again.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -23,11 +40,14 @@ export default function LoginScreen() {
 
           <View style={styles.loginSection}>
             <TouchableOpacity 
-              style={styles.googleButton}
+              style={[styles.googleButton, isLoading && styles.googleButtonDisabled]}
               onPress={handleGoogleLogin}
+              disabled={isLoading}
             >
               <Text style={styles.googleIcon}>🔍</Text>
-              <Text style={styles.googleButtonText}>Continue with Google</Text>
+              <Text style={styles.googleButtonText}>
+                {isLoading ? 'Signing in...' : 'Continue with Google'}
+              </Text>
             </TouchableOpacity>
             
             <Text style={styles.disclaimer}>
@@ -95,6 +115,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
+  },
+  googleButtonDisabled: {
+    opacity: 0.6,
   },
   disclaimer: {
     fontSize: 12,
