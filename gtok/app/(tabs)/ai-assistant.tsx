@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, Platform } from "react-native";
-import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Message {
   id: number;
@@ -10,6 +11,7 @@ interface Message {
 }
 
 export default function AIAssistantScreen() {
+  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -69,7 +71,7 @@ export default function AIAssistantScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Text style={styles.title}>AI Assistant</Text>
         <TouchableOpacity style={styles.settingsButton}>
@@ -196,7 +198,7 @@ export default function AIAssistantScreen() {
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 }
 

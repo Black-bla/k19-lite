@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  
   const todayClasses = [
     { id: 1, name: "Mathematics", time: "09:00 AM", room: "Room 101", countdown: "2h 15m" },
     { id: 2, name: "Physics", time: "02:00 PM", room: "Lab 204", countdown: "7h 15m" },
@@ -20,7 +25,7 @@ export default function HomeScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
@@ -28,7 +33,7 @@ export default function HomeScreen() {
             <Text style={styles.greeting}>Good morning! 👋</Text>
             <Text style={styles.date}>Today, March 15, 2024</Text>
           </View>
-          <TouchableOpacity style={styles.profileButton}>
+          <TouchableOpacity style={styles.profileButton} onPress={() => router.push("/settings")}>
             <Ionicons name="person-circle" size={32} color="#667eea" />
           </TouchableOpacity>
         </View>
@@ -92,7 +97,7 @@ export default function HomeScreen() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

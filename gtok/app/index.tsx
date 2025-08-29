@@ -7,7 +7,7 @@ export default function SplashScreen() {
   useEffect(() => {
     // Simulate splash screen delay
     const timer = setTimeout(() => {
-      router.push({ pathname: "/(auth)/login" } as any);
+      router.replace("/(tabs)/" as any);
     }, 2000);
 
     return () => clearTimeout(timer);

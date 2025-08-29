@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
-import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function DocumentsScreen() {
+  const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -79,7 +81,7 @@ export default function DocumentsScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Text style={styles.title}>Documents</Text>
         <TouchableOpacity style={styles.uploadButton}>
@@ -191,7 +193,7 @@ export default function DocumentsScreen() {
           <Text style={styles.actionText}>Share</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

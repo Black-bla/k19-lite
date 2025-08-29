@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
-import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState } from "react";
 
 export default function ClassesScreen() {
+  const insets = useSafeAreaInsets();
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -84,7 +86,7 @@ export default function ClassesScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Text style={styles.title}>Classes</Text>
         <View style={styles.viewToggle}>
@@ -130,7 +132,7 @@ export default function ClassesScreen() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

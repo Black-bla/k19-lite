@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
-import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function NotesScreen() {
+  const insets = useSafeAreaInsets();
   const [selectedNote, setSelectedNote] = useState<number | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [noteContent, setNoteContent] = useState("");
@@ -150,7 +152,7 @@ export default function NotesScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Text style={styles.title}>Notes</Text>
         <TouchableOpacity style={styles.searchButton}>
@@ -159,7 +161,7 @@ export default function NotesScreen() {
       </View>
 
       {selectedNote ? renderNoteEditor() : renderNotesList()}
-    </SafeAreaView>
+    </View>
   );
 }
 
