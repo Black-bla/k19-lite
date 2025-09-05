@@ -1,2 +1,4 @@
 CREATE EXPO APP: bunx create-expo-app
 RESET PROJECT: bun reset-project
+DEV BUILD: npx expo install expo-dev-client
+         : npx expo run:android
